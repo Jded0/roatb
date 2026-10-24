@@ -1,5 +1,11 @@
 const CACHE_NAME = "mawedi-shell-v1";
-const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg"];
+const APP_SHELL = [
+    "./",
+    "./index.html",
+    "./manifest.webmanifest",
+    "./icons/icon-192.png",
+    "./icons/icon-512.png"
+];
 
 self.addEventListener("install", event => {
     event.waitUntil(
