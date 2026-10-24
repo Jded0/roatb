@@ -110,6 +110,38 @@
         .countdown-line { gap: 5px; color: var(--muted); font-size: 12px; }
         .countdown-number { color: var(--card-color); font-size: 22px; font-weight: 900; }
 
+        .planner-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .planner-card { min-width: 0; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 15px; box-shadow: var(--shadow); }
+        .planner-card h3 { margin: 0 0 4px; font-size: 17px; }
+        .planner-card-intro { margin: 0 0 13px; color: var(--muted); font-size: 11px; }
+        .planner-field { display: grid; gap: 5px; margin-bottom: 10px; }
+        .planner-field label { font-size: 11px; font-weight: 800; }
+        .planner-field input, .planner-field textarea { width: 100%; min-height: 42px; padding: 8px 10px; color: var(--ink); background: #fff; border: 1px solid #dce5dd; border-radius: 9px; }
+        .planner-field textarea { min-height: 64px; resize: vertical; }
+        .planner-submit { width: 100%; min-height: 42px; color: #fff; background: var(--green-800); border: 0; border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 800; }
+        .planner-submit:hover { background: var(--green-950); }
+        .planner-storage-status { margin: 10px 0 0; padding: 9px 12px; color: var(--green-800); background: var(--green-100); border-radius: 9px; font-size: 11px; }
+        .planner-storage-status.error { color: #8d2525; background: #fff0ef; }
+        .planner-list { display: grid; gap: 9px; margin-top: 14px; }
+        .planner-item { min-width: 0; padding: 12px; background: #fbfdfb; border: 1px solid var(--line); border-radius: 11px; }
+        .planner-item.is-complete { opacity: .68; }
+        .planner-item.is-complete .planner-item-title { text-decoration: line-through; }
+        .planner-item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+        .planner-item-title { overflow-wrap: anywhere; margin: 0; font-size: 13px; font-weight: 900; }
+        .planner-item-status { flex: 0 0 auto; padding: 2px 8px; color: var(--green-800); background: var(--green-100); border-radius: 20px; font-size: 10px; font-weight: 800; }
+        .planner-item-status.overdue { color: #a42e2e; background: #fff0ef; }
+        .planner-item-status.complete { color: #65706b; background: #edf0ed; }
+        .planner-item-date { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+        .planner-item-notes { margin: 6px 0 0; color: #4e5c54; font-size: 11px; overflow-wrap: anywhere; white-space: pre-wrap; }
+        .planner-countdown { margin: 8px 0 0; color: var(--green-800); font-size: 12px; font-weight: 900; font-variant-numeric: tabular-nums; }
+        .planner-countdown.overdue { color: #a42e2e; }
+        .planner-item-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); }
+        .planner-action { min-height: 32px; padding: 5px 10px; color: var(--green-800); background: #fff; border: 1px solid #d8e4dc; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: 800; }
+        .planner-action:hover { background: var(--green-100); }
+        .planner-action.delete { color: #9b3630; border-color: #f0d8d5; }
+        .planner-empty { margin: 12px 0 0; padding: 13px; color: var(--muted); background: #f7faf7; border: 1px dashed #d6e2d8; border-radius: 10px; text-align: center; font-size: 11px; }
+        .planner-empty[hidden] { display: none; }
+
         .event-list { display: grid; gap: 9px; }
         .event-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px; padding: 12px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; }
         .event-date { display: grid; width: 42px; height: 46px; place-content: center; color: var(--green-800); background: var(--green-100); border-radius: 10px; text-align: center; line-height: 1.2; }
@@ -185,6 +217,7 @@
             .hero-inner { grid-template-columns: 1fr; gap: 24px; }
             .date-card { max-width: none; }
             .page-layout { grid-template-columns: 1fr; padding-block: 24px 40px; }
+            .planner-grid { grid-template-columns: 1fr; }
             .sidebar { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
             .sidebar-card { margin: 0; }
             .sidebar-card:last-child { grid-column: 1 / -1; }
@@ -230,6 +263,8 @@
     </header>
     <nav class="quick-nav" aria-label="روابط سريعة">
         <div class="container quick-nav-row">
+            <a href="#tasks">مهامي</a>
+            <a href="#appointments">مواعيدي</a>
             <a href="#salary">راتب الموظفين</a>
             <a href="#citizen">حساب المواطن</a>
             <a href="#housing">الدعم السكني</a>
@@ -267,6 +302,43 @@
 
         <div class="container page-layout">
             <div>
+                <section class="section-block" id="planner" aria-labelledby="planner-title">
+                    <div class="section-heading">
+                        <div>
+                            <div class="heading-title"><span class="heading-bar"></span><h2 id="planner-title">مهامك ومواعيدك</h2></div>
+                            <p class="section-note">أضف موعدًا بالتاريخ والوقت، وتابع الوقت المتبقي مباشرةً.</p>
+                        </div>
+                    </div>
+                    <p class="planner-storage-status" id="planner-storage-status" role="status" aria-live="polite">تُحفظ بياناتك على هذا الجهاز فقط ولا تتم مزامنتها بين الأجهزة.</p>
+                    <div class="planner-grid">
+                        <section class="planner-card" id="tasks" aria-labelledby="tasks-title">
+                            <h3 id="tasks-title">✅ المهام</h3>
+                            <p class="planner-card-intro">أضف مهمة وحدد موعد إنجازها.</p>
+                            <form id="task-form">
+                                <div class="planner-field"><label for="task-title">اسم المهمة</label><input id="task-title" name="title" type="text" maxlength="100" autocomplete="off" placeholder="مثال: تسليم التقرير" required></div>
+                                <div class="planner-field"><label for="task-datetime">تاريخ ووقت المهمة</label><input id="task-datetime" name="datetime" type="datetime-local" required></div>
+                                <div class="planner-field"><label for="task-notes">تفاصيل (اختياري)</label><textarea id="task-notes" name="notes" maxlength="300" placeholder="أضف أي تفاصيل تساعدك"></textarea></div>
+                                <button class="planner-submit" type="submit">إضافة المهمة</button>
+                            </form>
+                            <p class="planner-empty" id="tasks-empty">لا توجد مهام بعد. أضف مهمتك الأولى أعلاه.</p>
+                            <div class="planner-list" id="tasks-list"></div>
+                        </section>
+                        <section class="planner-card" id="appointments" aria-labelledby="appointments-title">
+                            <h3 id="appointments-title">📅 المواعيد</h3>
+                            <p class="planner-card-intro">سجّل موعدك ومكانه، وتابع العدّ التنازلي.</p>
+                            <form id="appointment-form">
+                                <div class="planner-field"><label for="appointment-title">اسم الموعد</label><input id="appointment-title" name="title" type="text" maxlength="100" autocomplete="off" placeholder="مثال: موعد الطبيب" required></div>
+                                <div class="planner-field"><label for="appointment-datetime">تاريخ ووقت الموعد</label><input id="appointment-datetime" name="datetime" type="datetime-local" required></div>
+                                <div class="planner-field"><label for="appointment-place">المكان (اختياري)</label><input id="appointment-place" name="place" type="text" maxlength="120" autocomplete="street-address" placeholder="أدخل موقع الموعد"></div>
+                                <div class="planner-field"><label for="appointment-notes">ملاحظات (اختياري)</label><textarea id="appointment-notes" name="notes" maxlength="300" placeholder="أضف أي تفاصيل للموعد"></textarea></div>
+                                <button class="planner-submit" type="submit">إضافة الموعد</button>
+                            </form>
+                            <p class="planner-empty" id="appointments-empty">لا توجد مواعيد بعد. أضف موعدك الأول أعلاه.</p>
+                            <div class="planner-list" id="appointments-list"></div>
+                        </section>
+                    </div>
+                </section>
+
                 <section class="section-block" id="payments" aria-labelledby="payments-title">
                     <div class="section-heading">
                         <div>
@@ -438,6 +510,9 @@
             const formatNumber = new Intl.NumberFormat("ar-SA", { maximumFractionDigits: 2 });
             const dateOnly = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
             const today = dateOnly(now);
+            const plannerStorageKey = "mawedi.planner.v1";
+            const plannerStatus = document.getElementById("planner-storage-status");
+            const plannerData = { tasks: [], appointments: [] };
 
             document.getElementById("today-label").textContent = `${weekday.format(now)} — ${fullDate.format(now)} م`;
             document.getElementById("weekday").textContent = weekday.format(now);
@@ -445,6 +520,251 @@
             document.getElementById("hijri-date").textContent = hijriLong.format(now);
             document.getElementById("hijri-numeric").textContent = `${hijriNumber.format(now)} هـ`;
             document.getElementById("copyright-year").textContent = String(now.getFullYear());
+
+            function setPlannerStatus(message, isError = false) {
+                plannerStatus.textContent = message;
+                plannerStatus.classList.toggle("error", isError);
+            }
+
+            function isValidPlannerItem(item) {
+                return item !== null
+                    && typeof item === "object"
+                    && typeof item.id === "string"
+                    && typeof item.title === "string"
+                    && item.title.trim().length > 0
+                    && typeof item.datetime === "string"
+                    && Number.isFinite(new Date(item.datetime).getTime())
+                    && typeof item.notes === "string"
+                    && typeof item.done === "boolean"
+                    && (item.type === "task" || item.type === "appointment")
+                    && (item.type !== "appointment" || typeof item.place === "string");
+            }
+
+            function loadPlannerData() {
+                try {
+                    const saved = localStorage.getItem(plannerStorageKey);
+                    if (saved === null) return;
+                    const parsed = JSON.parse(saved);
+                    if (!parsed || !Array.isArray(parsed.tasks) || !Array.isArray(parsed.appointments)) {
+                        throw new Error("هيكل بيانات المهام والمواعيد غير صالح.");
+                    }
+                    if (!parsed.tasks.every(item => isValidPlannerItem(item) && item.type === "task")
+                        || !parsed.appointments.every(item => isValidPlannerItem(item) && item.type === "appointment")) {
+                        throw new Error("تحتوي بيانات المهام أو المواعيد على عناصر غير صالحة.");
+                    }
+                    plannerData.tasks = parsed.tasks;
+                    plannerData.appointments = parsed.appointments;
+                } catch (error) {
+                    console.error("تعذرت قراءة المهام والمواعيد المحفوظة:", error);
+                    setPlannerStatus("تعذرت قراءة البيانات المحفوظة على هذا الجهاز. يمكنك إضافة عناصر جديدة، وسيُستبدل الملف غير القابل للقراءة عند الحفظ.", true);
+                }
+            }
+
+            function savePlannerData() {
+                try {
+                    localStorage.setItem(plannerStorageKey, JSON.stringify(plannerData));
+                    setPlannerStatus("تُحفظ بياناتك على هذا الجهاز فقط ولا تتم مزامنتها بين الأجهزة.");
+                    return true;
+                } catch (error) {
+                    console.error("تعذر حفظ المهام والمواعيد على هذا الجهاز:", error);
+                    setPlannerStatus("تعذر حفظ التغييرات على هذا الجهاز. تحقّق من مساحة التخزين أو إعدادات الخصوصية.", true);
+                    return false;
+                }
+            }
+
+            function makePlannerId() {
+                return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+            }
+
+            function formatPlannerDate(value) {
+                return new Intl.DateTimeFormat(locale, {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }).format(new Date(value));
+            }
+
+            function createPlannerButton(label, className, onClick, ariaLabel) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = className;
+                button.textContent = label;
+                button.setAttribute("aria-label", ariaLabel);
+                button.addEventListener("click", onClick);
+                return button;
+            }
+
+            function renderPlannerCollection(type) {
+                const isTask = type === "task";
+                const items = isTask ? plannerData.tasks : plannerData.appointments;
+                const list = document.getElementById(isTask ? "tasks-list" : "appointments-list");
+                const empty = document.getElementById(isTask ? "tasks-empty" : "appointments-empty");
+                const noun = isTask ? "المهمة" : "الموعد";
+                const sortedItems = [...items].sort((a, b) => {
+                    if (a.done !== b.done) return a.done ? 1 : -1;
+                    return new Date(a.datetime).getTime() - new Date(b.datetime).getTime();
+                });
+
+                list.replaceChildren();
+                empty.hidden = sortedItems.length > 0;
+
+                sortedItems.forEach(item => {
+                    const card = document.createElement("article");
+                    card.className = `planner-item${item.done ? " is-complete" : ""}`;
+
+                    const top = document.createElement("div");
+                    top.className = "planner-item-top";
+                    const title = document.createElement("h4");
+                    title.className = "planner-item-title";
+                    title.textContent = item.title;
+                    const status = document.createElement("span");
+                    status.className = `planner-item-status${item.done ? " complete" : ""}`;
+                    status.textContent = item.done ? "مكتمل" : "قادمة";
+                    top.append(title, status);
+
+                    const date = document.createElement("p");
+                    date.className = "planner-item-date";
+                    date.textContent = formatPlannerDate(item.datetime);
+                    card.append(top, date);
+
+                    if (item.type === "appointment" && item.place) {
+                        const place = document.createElement("p");
+                        place.className = "planner-item-notes";
+                        place.textContent = `📍 ${item.place}`;
+                        card.append(place);
+                    }
+
+                    if (item.notes) {
+                        const notes = document.createElement("p");
+                        notes.className = "planner-item-notes";
+                        notes.textContent = item.notes;
+                        card.append(notes);
+                    }
+
+                    const countdown = document.createElement("p");
+                    countdown.className = "planner-countdown";
+                    countdown.dataset.countdown = "";
+                    countdown.dataset.target = String(new Date(item.datetime).getTime());
+                    countdown.dataset.type = item.type;
+                    countdown.dataset.done = String(item.done);
+                    card.append(countdown);
+
+                    const actions = document.createElement("div");
+                    actions.className = "planner-item-actions";
+                    actions.append(createPlannerButton(
+                        item.done ? "إعادة فتح" : "تم الإنجاز",
+                        "planner-action",
+                        () => {
+                            item.done = !item.done;
+                            savePlannerData();
+                            renderPlannerLists();
+                        },
+                        `${item.done ? "إعادة فتح" : "إكمال"} ${noun}: ${item.title}`
+                    ));
+                    actions.append(createPlannerButton(
+                        "حذف",
+                        "planner-action delete",
+                        () => {
+                            const collection = isTask ? plannerData.tasks : plannerData.appointments;
+                            const itemIndex = collection.findIndex(entry => entry.id === item.id);
+                            if (itemIndex === -1) return;
+                            collection.splice(itemIndex, 1);
+                            savePlannerData();
+                            renderPlannerLists();
+                        },
+                        `حذف ${noun}: ${item.title}`
+                    ));
+                    card.append(actions);
+                    list.append(card);
+                });
+            }
+
+            function renderPlannerLists() {
+                renderPlannerCollection("task");
+                renderPlannerCollection("appointment");
+                updatePlannerCountdowns();
+            }
+
+            function formatDuration(totalSeconds) {
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                const parts = [];
+                if (days) parts.push(`${formatNumber.format(days)} يوم`);
+                if (hours || days) parts.push(`${formatNumber.format(hours)} ساعة`);
+                if (minutes || hours || days) parts.push(`${formatNumber.format(minutes)} دقيقة`);
+                parts.push(`${formatNumber.format(seconds)} ثانية`);
+                return parts.join(" و ");
+            }
+
+            function updatePlannerCountdowns() {
+                const currentTime = Date.now();
+                document.querySelectorAll("[data-countdown]").forEach(element => {
+                    if (element.dataset.done === "true") {
+                        element.textContent = "تم الإنجاز";
+                        element.classList.remove("overdue");
+                        return;
+                    }
+                    const difference = Number(element.dataset.target) - currentTime;
+                    const totalSeconds = Math.floor(Math.abs(difference) / 1000);
+                    if (difference >= 0) {
+                        element.textContent = difference < 1000
+                            ? "حان الموعد الآن"
+                            : `الوقت المتبقي: ${formatDuration(totalSeconds)}`;
+                        element.classList.remove("overdue");
+                    } else {
+                        const prefix = element.dataset.type === "task" ? "متأخرة منذ" : "انتهى الموعد منذ";
+                        element.textContent = `${prefix} ${formatDuration(totalSeconds)}`;
+                        element.classList.add("overdue");
+                    }
+                    const status = element.closest(".planner-item").querySelector(".planner-item-status");
+                    const isOverdue = difference < 0;
+                    status.textContent = isOverdue ? (element.dataset.type === "task" ? "متأخرة" : "انتهى") : "قادمة";
+                    status.classList.toggle("overdue", isOverdue);
+                });
+            }
+
+            function addPlannerForm(formId, type) {
+                const form = document.getElementById(formId);
+                form.addEventListener("submit", event => {
+                    event.preventDefault();
+                    if (!form.reportValidity()) return;
+
+                    const formData = new FormData(form);
+                    const title = String(formData.get("title") || "").trim();
+                    const dateTime = String(formData.get("datetime") || "");
+                    if (!title || !Number.isFinite(new Date(dateTime).getTime())) {
+                        setPlannerStatus("أدخل اسمًا وتاريخًا ووقتًا صالحًا.", true);
+                        return;
+                    }
+
+                    const item = {
+                        id: makePlannerId(),
+                        type,
+                        title,
+                        datetime: dateTime,
+                        notes: String(formData.get("notes") || "").trim(),
+                        done: false
+                    };
+                    if (type === "appointment") item.place = String(formData.get("place") || "").trim();
+
+                    const collection = type === "task" ? plannerData.tasks : plannerData.appointments;
+                    collection.push(item);
+                    savePlannerData();
+                    form.reset();
+                    renderPlannerLists();
+                });
+            }
+
+            loadPlannerData();
+            addPlannerForm("task-form", "task");
+            addPlannerForm("appointment-form", "appointment");
+            renderPlannerLists();
+            window.setInterval(updatePlannerCountdowns, 1000);
 
             const installButton = document.getElementById("install-app");
             let installPrompt;
