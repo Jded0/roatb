@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="مواعيد الرواتب والدعم الحكومي، التقويم الدراسي، المواسم، وأدوات حسابية مفيدة في مكان واحد.">
+    <meta name="theme-color" content="#0b3b2b">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+    <title>موعدي | مواعيد الرواتب والدعم في السعودية</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --green-950: #092e23;
+            --green-900: #0b3b2b;
+            --green-800: #12533b;
+            --green-700: #19734d;
+            --green-100: #e8f4ed;
+            --paper: #f5f8f5;
+            --surface: #fff;
+            --ink: #15251e;
+            --muted: #697870;
+            --line: #e3eae5;
+            --gold: #dfa83e;
+            --radius: 18px;
+            --shadow: 0 10px 30px rgba(16, 54, 37, .06);
+            --max-width: 1180px;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            line-height: 1.7;
+        }
+        a { color: inherit; text-decoration: none; }
+        button, input, select { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        .container { width: min(calc(100% - 36px), var(--max-width)); margin-inline: auto; }
+        .skip-link { position: absolute; inset-block-start: -60px; inset-inline-start: 16px; z-index: 99; padding: 10px 14px; color: #fff; background: var(--green-950); border-radius: 8px; }
+        .skip-link:focus { inset-block-start: 12px; }
+
+        .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.95); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
+        .header-row { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; color: var(--green-900); font-weight: 900; }
+        .brand-icon { display: grid; width: 40px; height: 40px; place-items: center; color: #fff; background: var(--green-800); border-radius: 13px; font-size: 21px; }
+        .brand small { display: block; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; line-height: 1.2; }
+        .main-nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); color: #53645a; font-size: 13px; font-weight: 700; }
+        .main-nav a:hover, .main-nav a:focus-visible { color: var(--green-700); }
+        .install-button { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; padding: 7px 12px; color: #fff; background: var(--green-800); border: 0; border-radius: 9px; cursor: pointer; font-size: 12px; font-weight: 800; white-space: nowrap; }
+        .install-button:hover { background: var(--green-950); }
+        .install-button[hidden] { display: none; }
+        .today-label { color: var(--muted); white-space: nowrap; font-size: 12px; }
+        .quick-nav { overflow-x: auto; color: #fff; background: var(--green-900); scrollbar-width: thin; }
+        .quick-nav-row { display: flex; min-height: 42px; align-items: center; gap: 4px; white-space: nowrap; }
+        .quick-nav a { padding: 7px 12px; color: #e0eee5; border-radius: 8px; font-size: 12px; }
+        .quick-nav a:hover, .quick-nav a:focus-visible { color: #fff; background: rgba(255,255,255,.12); }
+
+        .hero { position: relative; overflow: hidden; padding: 52px 0; color: #fff; background: var(--green-900); }
+        .hero::before, .hero::after { position: absolute; content: ""; border: 1px solid rgba(255,255,255,.09); border-radius: 50%; pointer-events: none; }
+        .hero::before { width: 460px; height: 460px; inset-block-start: -270px; inset-inline-start: -90px; }
+        .hero::after { width: 340px; height: 340px; inset-block-end: -260px; inset-inline-start: 15%; }
+        .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr minmax(260px, 370px); align-items: center; gap: 56px; }
+        .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; color: #bfe3c9; font-size: 13px; font-weight: 800; }
+        .live-dot { width: 8px; height: 8px; background: #62d68c; border-radius: 50%; box-shadow: 0 0 0 5px rgba(98,214,140,.13); }
+        h1, h2, h3, p { margin-block-start: 0; }
+        h1 { margin-block-end: 16px; font-size: clamp(2.4rem, 5.6vw, 4.8rem); line-height: 1.13; letter-spacing: -.04em; }
+        h1 span { color: #7cdda0; }
+        .hero-copy { max-width: 650px; margin-block-end: 24px; color: #d4e3da; font-size: 16px; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+        .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; padding: 9px 17px; border: 1px solid transparent; border-radius: 10px; font-weight: 800; transition: transform .18s ease, background .18s ease; }
+        .button:hover { transform: translateY(-2px); }
+        .button-light { color: var(--green-950); background: #fff; }
+        .button-ghost { color: #fff; border-color: rgba(255,255,255,.28); }
+        .date-card { padding: 22px; color: var(--ink); background: #fff; border: 1px solid rgba(255,255,255,.5); border-radius: var(--radius); box-shadow: 0 18px 50px rgba(0,0,0,.14); }
+        .date-card-label { margin-bottom: 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
+        .hijri-date { margin-bottom: 14px; color: var(--green-900); font-size: 22px; font-weight: 900; }
+        .date-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; }
+        .date-row span:first-child { color: var(--muted); }
+        .date-row strong { text-align: left; }
+
+        .page-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 24px; padding-block: 34px 58px; }
+        .section-block { margin-bottom: 38px; }
+        .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 16px; }
+        .section-heading h2 { margin: 0; font-size: clamp(20px, 2.5vw, 27px); line-height: 1.35; }
+        .heading-title { display: flex; align-items: center; gap: 10px; }
+        .heading-bar { width: 4px; height: 25px; flex: 0 0 auto; background: var(--green-700); border-radius: 4px; }
+        .section-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+        .text-link { color: var(--green-700); font-size: 12px; font-weight: 800; white-space: nowrap; }
+        .salary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .salary-card { --card-color: #18804e; padding: 17px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--card-color); border-radius: 14px; box-shadow: var(--shadow); }
+        .salary-card:nth-child(2) { --card-color: #178a83; }
+        .salary-card:nth-child(3) { --card-color: #3976b9; }
+        .salary-card:nth-child(4) { --card-color: #8550a2; }
+        .salary-card:nth-child(5) { --card-color: #b28124; }
+        .salary-card:nth-child(6) { --card-color: #cc604a; }
+        .salary-card:nth-child(7) { --card-color: #b34f78; }
+        .salary-top, .salary-title, .salary-bottom, .countdown-line { display: flex; align-items: center; }
+        .salary-top, .salary-bottom { justify-content: space-between; gap: 12px; }
+        .salary-title { gap: 10px; min-width: 0; }
+        .salary-icon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; background: color-mix(in srgb, var(--card-color) 11%, white); border-radius: 12px; font-size: 20px; }
+        .salary-title h3 { margin: 0; font-size: 14px; }
+        .salary-title p { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+        .status-pill { padding: 3px 9px; color: var(--card-color); background: color-mix(in srgb, var(--card-color) 10%, white); border-radius: 20px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+        .salary-bottom { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line); }
+        .payment-date { font-size: 14px; font-weight: 900; }
+        .countdown-line { gap: 5px; color: var(--muted); font-size: 12px; }
+        .countdown-number { color: var(--card-color); font-size: 22px; font-weight: 900; }
+
+        .event-list { display: grid; gap: 9px; }
+        .event-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px; padding: 12px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; }
+        .event-date { display: grid; width: 42px; height: 46px; place-content: center; color: var(--green-800); background: var(--green-100); border-radius: 10px; text-align: center; line-height: 1.2; }
+        .event-date strong { font-size: 16px; }
+        .event-date span { font-size: 10px; }
+        .event-row h3 { margin: 0 0 2px; font-size: 13px; }
+        .event-row p { margin: 0; color: var(--muted); font-size: 11px; }
+        .event-remaining { color: var(--green-700); font-size: 11px; font-weight: 800; white-space: nowrap; }
+        .seasons-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+        .season-card { padding: 15px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; text-align: center; }
+        .season-card.active { border-color: #94cfaa; background: #eff8f1; box-shadow: inset 0 0 0 1px #94cfaa; }
+        .season-emoji { display: block; margin-bottom: 5px; font-size: 23px; }
+        .season-name { font-size: 13px; font-weight: 900; }
+        .season-period, .season-temperature { color: var(--muted); font-size: 10px; }
+        .season-state { display: inline-block; margin-top: 6px; padding: 1px 8px; color: var(--green-800); background: #dcefe2; border-radius: 20px; font-size: 10px; font-weight: 800; }
+        .season-tip { margin: 12px 0 0; padding: 12px 14px; color: #5f4b20; background: #fff8e8; border: 1px solid #f1e4c5; border-radius: 12px; font-size: 12px; }
+        .tool-groups { display: grid; gap: 16px; }
+        .tool-group h3 { margin: 0 0 9px; font-size: 14px; }
+        .tool-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
+        .tool-link { display: flex; min-height: 74px; align-items: center; gap: 10px; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; transition: border-color .18s, transform .18s; }
+        .tool-link:hover { transform: translateY(-2px); border-color: #8bb89c; }
+        .tool-link-icon { font-size: 20px; }
+        .tool-link strong { display: block; font-size: 11px; line-height: 1.5; }
+        .tool-link small { display: block; color: var(--muted); font-size: 10px; }
+
+        .sidebar-card { margin-bottom: 13px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+        .sidebar-card h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 14px; }
+        .season-highlight { padding: 13px; color: #fff; background: linear-gradient(135deg, #28784d, #56a676); border-radius: 12px; }
+        .season-highlight strong { display: block; font-size: 17px; }
+        .season-highlight span { font-size: 11px; opacity: .88; }
+        .sidebar-links { display: grid; }
+        .sidebar-links a { display: flex; justify-content: space-between; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+        .sidebar-links a:last-child { padding-bottom: 0; border: 0; }
+        .sidebar-links a:hover { color: var(--green-700); }
+        .disclaimer { color: var(--muted); font-size: 11px; line-height: 1.8; }
+        .gold-placeholder { padding: 11px; color: var(--muted); background: #fff9ea; border-radius: 10px; font-size: 11px; }
+
+        .calculators { padding-block: 42px; background: #edf3ee; border-block: 1px solid var(--line); }
+        .calculator-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+        .calculator { padding: 19px; background: var(--surface); border: 1px solid var(--line); border-radius: 15px; box-shadow: var(--shadow); }
+        .calculator h3 { margin-bottom: 5px; font-size: 16px; }
+        .calculator > p { min-height: 38px; margin-bottom: 14px; color: var(--muted); font-size: 11px; }
+        .field { display: grid; gap: 5px; margin-bottom: 10px; }
+        .field label { font-size: 11px; font-weight: 800; }
+        .field input, .field select { width: 100%; min-height: 40px; padding: 7px 10px; color: var(--ink); background: #fff; border: 1px solid #dce5dd; border-radius: 9px; }
+        .calc-button { width: 100%; min-height: 40px; color: #fff; background: var(--green-800); border: 0; border-radius: 9px; cursor: pointer; font-weight: 800; }
+        .calc-button:hover { background: var(--green-950); }
+        .result { min-height: 24px; margin: 10px 0 0; color: var(--green-800); font-size: 12px; font-weight: 800; }
+        .result.error { color: #a42e2e; }
+        .calc-note { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+        .site-footer { padding-block: 30px; color: #d8e8dd; background: var(--green-950); }
+        .footer-top { display: grid; grid-template-columns: 1.2fr 2fr; gap: 40px; padding-bottom: 22px; }
+        .footer-about p { max-width: 380px; margin: 10px 0 0; color: #a8c1b1; font-size: 12px; }
+        .footer-links { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+        .footer-links h2 { margin: 0 0 8px; color: #fff; font-size: 12px; }
+        .footer-links a { display: block; color: #b1c8b8; font-size: 11px; line-height: 2; }
+        .footer-links a:hover { color: #fff; }
+        .footer-bottom { display: flex; justify-content: space-between; gap: 16px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,.12); color: #9eb8a8; font-size: 10px; }
+        :focus-visible { outline: 3px solid #e5ad42; outline-offset: 3px; }
+
+        @media (max-width: 940px) {
+            .main-nav { display: none; }
+            .page-layout { grid-template-columns: minmax(0,1fr) 250px; gap: 16px; }
+            .tool-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .calculator-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .calculator:last-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 700px) {
+            .container { width: min(calc(100% - 28px), var(--max-width)); }
+            .header-row { min-height: 62px; }
+            .today-label { display: none; }
+            .hero { padding: 38px 0; }
+            .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+            .date-card { max-width: none; }
+            .page-layout { grid-template-columns: 1fr; padding-block: 24px 40px; }
+            .sidebar { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+            .sidebar-card { margin: 0; }
+            .sidebar-card:last-child { grid-column: 1 / -1; }
+            .calculator-grid { grid-template-columns: 1fr; }
+            .calculator:last-child { grid-column: auto; }
+            .footer-top { grid-template-columns: 1fr; gap: 24px; }
+        }
+        @media (max-width: 470px) {
+            .salary-grid { grid-template-columns: 1fr; }
+            .seasons-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .tool-grid { grid-template-columns: 1fr 1fr; }
+            .sidebar { grid-template-columns: 1fr; }
+            .sidebar-card:last-child { grid-column: auto; }
+            .section-heading { align-items: start; }
+            .event-row { grid-template-columns: 42px 1fr; }
+            .event-remaining { grid-column: 2; }
+            .footer-links { grid-template-columns: repeat(2,1fr); }
+            .footer-bottom { flex-direction: column; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+    <header class="site-header">
+        <div class="container header-row">
+            <a class="brand" href="#top" aria-label="موعدي، الرئيسية">
+                <span class="brand-icon" aria-hidden="true">م</span>
+                <span>موعدي<small>دليلك للمواعيد السعودية</small></span>
+            </a>
+            <nav class="main-nav" aria-label="التنقل الرئيسي">
+                <a href="#payments">مواعيد الصرف</a>
+                <a href="#calendar">التقويم</a>
+                <a href="#seasons">المواسم</a>
+                <a href="#tools">الأدوات</a>
+            </nav>
+            <button class="install-button" id="install-app" type="button" hidden>تثبيت التطبيق</button>
+            <div class="today-label" id="today-label">يتم تحديث التاريخ...</div>
+        </div>
+    </header>
+    <nav class="quick-nav" aria-label="روابط سريعة">
+        <div class="container quick-nav-row">
+            <a href="#salary">راتب الموظفين</a>
+            <a href="#citizen">حساب المواطن</a>
+            <a href="#housing">الدعم السكني</a>
+            <a href="#rehab">التأهيل الشامل</a>
+            <a href="#pension">التقاعد</a>
+            <a href="#insurance">التأمينات</a>
+            <a href="#social">الضمان الاجتماعي</a>
+            <a href="#calendar">التقويم الدراسي</a>
+            <a href="#seasons">فصول السنة</a>
+            <a href="#tools">الحاسبات</a>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero" id="top">
+            <div class="container hero-inner">
+                <div>
+                    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>مواعيدك المهمة في مكان واحد</p>
+                    <h1>رتّب مواعيدك،<br><span>وخطّط لوقتك.</span></h1>
+                    <p class="hero-copy">تابع مواعيد الرواتب والدعم الحكومي، وتعرّف على التقويم الدراسي والمواسم، واستخدم أدواتنا الحسابية بسهولة.</p>
+                    <div class="hero-actions">
+                        <a class="button button-light" href="#payments">استعرض مواعيد الصرف</a>
+                        <a class="button button-ghost" href="#tools">جرّب الحاسبات</a>
+                    </div>
+                </div>
+                <div class="date-card" aria-label="تاريخ اليوم">
+                    <div class="date-card-label">تاريخ اليوم</div>
+                    <div class="hijri-date" id="hijri-date">—</div>
+                    <div class="date-row"><span>اليوم</span><strong id="weekday">—</strong></div>
+                    <div class="date-row"><span>الميلادي</span><strong id="gregorian-date">—</strong></div>
+                    <div class="date-row"><span>بالتقويم الهجري</span><strong id="hijri-numeric">—</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container page-layout">
+            <div>
+                <section class="section-block" id="payments" aria-labelledby="payments-title">
+                    <div class="section-heading">
+                        <div>
+                            <div class="heading-title"><span class="heading-bar"></span><h2 id="payments-title">مواعيد الرواتب والدعم</h2></div>
+                            <p class="section-note">العدّ التنازلي محسوب تلقائيًا من تاريخ جهازك.</p>
+                        </div>
+                    </div>
+                    <div class="salary-grid" id="salary-grid">
+                        <article class="salary-card" id="salary" data-payment-day="27">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">💼</span><div><h3>راتب الموظفين</h3><p>يوم 27 من كل شهر ميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="citizen" data-payment-day="10">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">🏦</span><div><h3>حساب المواطن</h3><p>يوم 10 من كل شهر ميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="housing" data-payment-day="24">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">🏠</span><div><h3>الدعم السكني</h3><p>يوم 24 من كل شهر ميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="rehab" data-payment-day="26">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">♿</span><div><h3>التأهيل الشامل</h3><p>يوم 26 من كل شهر ميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="pension" data-payment-day="1">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">🏅</span><div><h3>راتب التقاعد</h3><p>بداية الشهر الميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="insurance" data-payment-day="1">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">🛡️</span><div><h3>التأمينات الاجتماعية</h3><p>بداية الشهر الميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                        <article class="salary-card" id="social" data-payment-day="1">
+                            <div class="salary-top"><div class="salary-title"><span class="salary-icon">💰</span><div><h3>الضمان الاجتماعي</h3><p>بداية الشهر الميلادي</p></div></div><span class="status-pill">موعد شهري</span></div>
+                            <div class="salary-bottom"><span class="payment-date" data-date></span><span class="countdown-line"><strong class="countdown-number" data-days>—</strong> يوم متبقٍ</span></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="section-block" id="calendar" aria-labelledby="calendar-title">
+                    <div class="section-heading">
+                        <div class="heading-title"><span class="heading-bar"></span><h2 id="calendar-title">التقويم الدراسي</h2></div>
+                        <a class="text-link" href="#calendar-events">عرض المواعيد ↓</a>
+                    </div>
+                    <div class="event-list" id="calendar-events">
+                        <article class="event-row"><div class="event-date"><strong>—</strong><span>يُعلن</span></div><div><h3>إجازة الخريف</h3><p>يُرجى مراجعة التقويم الدراسي الرسمي لتأكيد الموعد.</p></div><span class="event-remaining">موعد مدرسي</span></article>
+                        <article class="event-row"><div class="event-date"><strong>—</strong><span>يُعلن</span></div><div><h3>إجازة منتصف العام</h3><p>يُرجى مراجعة التقويم الدراسي الرسمي لتأكيد الموعد.</p></div><span class="event-remaining">موعد مدرسي</span></article>
+                        <article class="event-row"><div class="event-date"><strong>٢٢</strong><span>فبراير</span></div><div><h3>يوم التأسيس</h3><p>إجازة وطنية — تحقق من الإعلان الرسمي للتفاصيل.</p></div><span class="event-remaining">إجازة وطنية</span></article>
+                    </div>
+                </section>
+
+                <section class="section-block" id="seasons" aria-labelledby="seasons-title">
+                    <div class="section-heading">
+                        <div><div class="heading-title"><span class="heading-bar"></span><h2 id="seasons-title">فصول السنة والمواسم</h2></div><p class="section-note">مواعيد الفصول تقريبية وقد تختلف باختلاف التعريف المناخي.</p></div>
+                    </div>
+                    <div class="seasons-grid">
+                        <article class="season-card" data-season="winter"><span class="season-emoji">❄️</span><div class="season-name">الشتاء</div><div class="season-period">ديسمبر — مارس</div><div class="season-temperature">8° — 18°</div></article>
+                        <article class="season-card" data-season="spring"><span class="season-emoji">🌸</span><div class="season-name">الربيع</div><div class="season-period">مارس — يونيو</div><div class="season-temperature">18° — 28°</div></article>
+                        <article class="season-card" data-season="summer"><span class="season-emoji">☀️</span><div class="season-name">الصيف</div><div class="season-period">يونيو — سبتمبر</div><div class="season-temperature">38° — 48°</div></article>
+                        <article class="season-card" data-season="autumn"><span class="season-emoji">🍂</span><div class="season-name">الخريف</div><div class="season-period">سبتمبر — ديسمبر</div><div class="season-temperature">22° — 36°</div></article>
+                    </div>
+                    <p class="season-tip" id="season-tip">💡 يتم تمييز الفصل الحالي تلقائيًا وفق الشهر الميلادي.</p>
+                </section>
+
+                <section class="section-block" id="tools" aria-labelledby="tools-title">
+                    <div class="section-heading"><div><div class="heading-title"><span class="heading-bar"></span><h2 id="tools-title">أدوات وحاسبات مفيدة</h2></div><p class="section-note">اختر الأداة لفتح الحاسبة وإدخال بياناتك.</p></div></div>
+                    <div class="tool-groups">
+                        <div class="tool-group"><h3>سلالم الرواتب</h3><div class="tool-grid">
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">📋</span><span><strong>سلم الموظفين</strong><small>المراتب والدرجات</small></span></a>
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">🎓</span><span><strong>سلم المعلمين</strong><small>رتب تعليمية</small></span></a>
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">🏥</span><span><strong>سلم الكوادر الصحية</strong><small>الأطباء والأخصائيون</small></span></a>
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">⚔️</span><span><strong>سلم العسكريين</strong><small>الأفراد والضباط</small></span></a>
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">💼</span><span><strong>بند الأجور</strong><small>الفئات والدرجات</small></span></a>
+                            <a class="tool-link" href="#salary-scale"><span class="tool-link-icon">💊</span><span><strong>سلم الصيادلة</strong><small>الدرجات الوظيفية</small></span></a>
+                        </div></div>
+                        <p class="season-tip" id="salary-scale">دليل سلالم الرواتب هنا للتعريف بالخدمات فقط؛ لم تُرفق جداول الرواتب التفصيلية أو بيانات رسمية، لذا لا نعرض أرقامًا غير موثقة.</p>
+                        <div class="tool-group"><h3>حاسبات وتحويلات</h3><div class="tool-grid">
+                            <a class="tool-link" href="#zakat-calculator"><span class="tool-link-icon">🕌</span><span><strong>حاسبة الزكاة</strong><small>تقدير ٢٫٥٪</small></span></a>
+                            <a class="tool-link" href="#pension-calculator"><span class="tool-link-icon">🏅</span><span><strong>تقدير التقاعد</strong><small>حساب تقريبي</small></span></a>
+                            <a class="tool-link" href="#date-converter"><span class="tool-link-icon">📅</span><span><strong>تحويل التاريخ</strong><small>ميلادي وهجري</small></span></a>
+                        </div></div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="sidebar" aria-label="معلومات وروابط إضافية">
+                <section class="sidebar-card" id="disclaimer">
+                    <h2>🌤️ الموسم الحالي</h2>
+                    <div class="season-highlight"><strong id="current-season-name">—</strong><span id="current-season-detail">فصل السنة بحسب الشهر الحالي</span></div>
+                </section>
+                <section class="sidebar-card">
+                    <h2>🥇 أسعار الذهب</h2>
+                    <div class="gold-placeholder">لا تتوفر بيانات أسعار مباشرة في هذه النسخة. راجع مصدرًا ماليًا موثوقًا للأسعار المحدثة.</div>
+                </section>
+                <section class="sidebar-card">
+                    <h2>⭐ روابط سريعة</h2>
+                    <div class="sidebar-links">
+                        <a href="#salary">موعد راتب الموظفين <span>←</span></a>
+                        <a href="#citizen">حساب المواطن <span>←</span></a>
+                        <a href="#housing">الدعم السكني <span>←</span></a>
+                        <a href="#calendar">التقويم الدراسي <span>←</span></a>
+                        <a href="#tools">الحاسبات والأدوات <span>←</span></a>
+                    </div>
+                </section>
+                <section class="sidebar-card">
+                    <h2>تنويه مهم</h2>
+                    <p class="disclaimer">هذه منصة معلوماتية مستقلة وليست جهة حكومية. مواعيد الصرف والأحداث والحسابات المعروضة تقديرية؛ يرجى التأكد من الجهات الرسمية قبل اتخاذ أي قرار.</p>
+                </section>
+            </aside>
+        </div>
+
+        <section class="calculators" aria-labelledby="calculators-title">
+            <div class="container">
+                <div class="section-heading"><div><div class="heading-title"><span class="heading-bar"></span><h2 id="calculators-title">حاسبات تفاعلية</h2></div><p class="section-note">نتائج تقريبية للتوعية والتخطيط، وليست استشارة مالية أو فتوى.</p></div></div>
+                <div class="calculator-grid">
+                    <form class="calculator" id="zakat-calculator">
+                        <h3>حاسبة الزكاة</h3>
+                        <p>احسب ٢٫٥٪ من المبلغ الذي أدخلته. تحقق بنفسك من بلوغ النصاب وحولان الحول.</p>
+                        <div class="field"><label for="zakat-amount">المبلغ الخاضع للزكاة (ريال)</label><input id="zakat-amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="مثال: 50000" required></div>
+                        <button class="calc-button" type="submit">احسب الزكاة</button>
+                        <p class="result" id="zakat-result" aria-live="polite"></p>
+                        <p class="calc-note">النتيجة لا تحدد وجوب الزكاة أو النصاب.</p>
+                    </form>
+                    <form class="calculator" id="pension-calculator">
+                        <h3>تقدير معاش تقاعدي</h3>
+                        <p>تقدير مبسط بقسمة الراتب الأساسي على سنوات الخدمة المحددة.</p>
+                        <div class="field"><label for="pension-salary">الراتب الأساسي الأخير (ريال)</label><input id="pension-salary" type="number" min="0" step="1" inputmode="numeric" placeholder="مثال: 12000" required></div>
+                        <div class="field"><label for="service-years">سنوات الخدمة</label><input id="service-years" type="number" min="1" max="50" step="1" inputmode="numeric" placeholder="مثال: 25" required></div>
+                        <div class="field"><label for="pension-type">نوع التقدير</label><select id="pension-type"><option value="40">مدني — تقدير مبسط من 40 سنة</option><option value="35">عسكري — تقدير مبسط من 35 سنة</option></select></div>
+                        <button class="calc-button" type="submit">احسب التقدير</button>
+                        <p class="result" id="pension-result" aria-live="polite"></p>
+                        <p class="calc-note">الاستحقاق الفعلي يخضع للأنظمة والمدة والراتب المعتمد.</p>
+                    </form>
+                    <form class="calculator" id="date-converter">
+                        <h3>تحويل التاريخ</h3>
+                        <p>اعرض التاريخ الميلادي المدخل بالتقويم الهجري أم القرى في متصفحك.</p>
+                        <div class="field"><label for="convert-date">التاريخ الميلادي</label><input id="convert-date" type="date" required></div>
+                        <button class="calc-button" type="submit">حوّل إلى هجري</button>
+                        <p class="result" id="date-result" aria-live="polite"></p>
+                        <p class="calc-note">قد تختلف بعض التحويلات يومًا وفق طريقة اعتماد التقويم.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-about"><a class="brand" href="#top"><span class="brand-icon" aria-hidden="true">م</span><span style="color:#fff">موعدي<small style="color:#a8c1b1">دليلك للمواعيد السعودية</small></span></a><p>مواعيد الرواتب والدعم، التقويم الدراسي، ومجموعة من الأدوات المفيدة في واجهة عربية سهلة.</p></div>
+                <div class="footer-links">
+                    <div><h2>المواعيد</h2><a href="#payments">الرواتب والدعم</a><a href="#calendar">التقويم الدراسي</a><a href="#seasons">فصول السنة</a></div>
+                    <div><h2>الأدوات</h2><a href="#zakat-calculator">حاسبة الزكاة</a><a href="#pension-calculator">تقدير التقاعد</a><a href="#date-converter">تحويل التاريخ</a></div>
+                    <div><h2>معلومات</h2><a href="#top">عن المنصة</a><a href="#disclaimer">إخلاء المسؤولية</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© <span id="copyright-year"></span> موعدي — منصة معلوماتية مستقلة</span><span>المواعيد والحاسبات تقديرية وليست بيانات رسمية.</span></div>
+        </div>
+    </footer>
+    <script>
+        (() => {
+            const now = new Date();
+            const locale = "ar-SA";
+            const monthNames = new Intl.DateTimeFormat(locale, { month: "long" });
+            const weekday = new Intl.DateTimeFormat(locale, { weekday: "long" });
+            const fullDate = new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric" });
+            const hijriLong = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura", { day: "numeric", month: "long", year: "numeric" });
+            const hijriNumber = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { year: "numeric", month: "2-digit", day: "2-digit" });
+            const formatNumber = new Intl.NumberFormat("ar-SA", { maximumFractionDigits: 2 });
+            const dateOnly = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const today = dateOnly(now);
+
+            document.getElementById("today-label").textContent = `${weekday.format(now)} — ${fullDate.format(now)} م`;
+            document.getElementById("weekday").textContent = weekday.format(now);
+            document.getElementById("gregorian-date").textContent = `${fullDate.format(now)} م`;
+            document.getElementById("hijri-date").textContent = hijriLong.format(now);
+            document.getElementById("hijri-numeric").textContent = `${hijriNumber.format(now)} هـ`;
+            document.getElementById("copyright-year").textContent = String(now.getFullYear());
+
+            const installButton = document.getElementById("install-app");
+            let installPrompt;
+            window.addEventListener("beforeinstallprompt", event => {
+                event.preventDefault();
+                installPrompt = event;
+                installButton.hidden = false;
+            });
+            installButton.addEventListener("click", async () => {
+                if (!installPrompt) return;
+                installPrompt.prompt();
+                await installPrompt.userChoice;
+                installPrompt = null;
+                installButton.hidden = true;
+            });
+            window.addEventListener("appinstalled", () => {
+                installButton.hidden = true;
+                installPrompt = null;
+            });
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("./service-worker.js").catch(error => {
+                    console.error("تعذر تفعيل وضع العمل دون اتصال:", error);
+                });
+            }
+
+            document.querySelectorAll(".salary-card").forEach(card => {
+                const paymentDay = Number(card.dataset.paymentDay);
+                let target = new Date(now.getFullYear(), now.getMonth(), paymentDay);
+                if (target < today) target = new Date(now.getFullYear(), now.getMonth() + 1, paymentDay);
+                const daysLeft = Math.round((dateOnly(target) - today) / 86400000);
+                card.querySelector("[data-date]").textContent = fullDate.format(target);
+                card.querySelector("[data-days]").textContent = formatNumber.format(daysLeft);
+                const countdown = card.querySelector(".countdown-line");
+                countdown.lastChild.textContent = daysLeft === 0 ? " اليوم" : " يوم متبقٍ";
+            });
+
+            const seasons = [
+                { key: "winter", name: "فصل الشتاء", icon: "❄️", tip: "💡 اعتنِ بالتدفئة واستمتع بالأجواء الشتوية." },
+                { key: "spring", name: "فصل الربيع", icon: "🌸", tip: "💡 وقت مناسب للأنشطة الخارجية والرحلات." },
+                { key: "summer", name: "فصل الصيف", icon: "☀️", tip: "💡 حافظ على شرب الماء وتجنب أشعة الشمس وقت الظهيرة." },
+                { key: "autumn", name: "فصل الخريف", icon: "🍂", tip: "💡 اعتدل الطقس واستعد لتغير الأجواء." }
+            ];
+            const month = now.getMonth();
+            const day = now.getDate();
+            const currentSeason = month > 11 || (month === 11 && day >= 7) || month < 2 || (month === 2 && day < 8)
+                ? seasons[0]
+                : month < 5 || (month === 5 && day < 21)
+                    ? seasons[1]
+                    : month < 8 || (month === 8 && day < 22)
+                        ? seasons[2]
+                        : seasons[3];
+            const activeSeasonCard = document.querySelector(`[data-season="${currentSeason.key}"]`);
+            activeSeasonCard.classList.add("active");
+            activeSeasonCard.insertAdjacentHTML("beforeend", '<span class="season-state">الفصل الحالي</span>');
+            document.getElementById("season-tip").textContent = currentSeason.tip;
+            document.getElementById("current-season-name").textContent = `${currentSeason.icon} ${currentSeason.name}`;
+            document.getElementById("current-season-detail").textContent = `الشهر الحالي: ${monthNames.format(now)}`;
+
+            function setResult(element, message, isError = false) {
+                element.textContent = message;
+                element.classList.toggle("error", isError);
+            }
+
+            document.getElementById("zakat-calculator").addEventListener("submit", event => {
+                event.preventDefault();
+                const amount = Number(document.getElementById("zakat-amount").value);
+                const result = document.getElementById("zakat-result");
+                if (!Number.isFinite(amount) || amount <= 0) {
+                    setResult(result, "أدخل مبلغًا أكبر من صفر.", true);
+                    return;
+                }
+                setResult(result, `قيمة ٢٫٥٪ من المبلغ: ${formatNumber.format(amount * 0.025)} ريال`);
+            });
+
+            document.getElementById("pension-calculator").addEventListener("submit", event => {
+                event.preventDefault();
+                const salary = Number(document.getElementById("pension-salary").value);
+                const years = Number(document.getElementById("service-years").value);
+                const divisor = Number(document.getElementById("pension-type").value);
+                const result = document.getElementById("pension-result");
+                if (!Number.isFinite(salary) || salary <= 0 || !Number.isInteger(years) || years < 1 || years > 50) {
+                    setResult(result, "أدخل راتبًا صحيحًا ومدة خدمة من سنة إلى 50 سنة.", true);
+                    return;
+                }
+                setResult(result, `التقدير المبسط: ${formatNumber.format(salary * years / divisor)} ريال شهريًا`);
+            });
+
+            document.getElementById("date-converter").addEventListener("submit", event => {
+                event.preventDefault();
+                const value = document.getElementById("convert-date").value;
+                const result = document.getElementById("date-result");
+                if (!value) {
+                    setResult(result, "اختر تاريخًا صحيحًا للتحويل.", true);
+                    return;
+                }
+                const [year, month, day] = value.split("-").map(Number);
+                const date = new Date(year, month - 1, day, 12);
+                if (Number.isNaN(date.getTime())) {
+                    setResult(result, "تعذر قراءة التاريخ المدخل.", true);
+                    return;
+                }
+                setResult(result, hijriLong.format(date));
+            });
+        })();
+    </script>
+</body>
+</html>

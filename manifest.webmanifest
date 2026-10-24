@@ -1,0 +1,24 @@
+{
+  "id": "./",
+  "name": "موعدي | مواعيد الرواتب والدعم في السعودية",
+  "short_name": "موعدي",
+  "description": "مواعيد الرواتب والدعم الحكومي، التقويم الدراسي، المواسم، وأدوات حسابية مفيدة.",
+  "lang": "ar-SA",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f5f8f5",
+  "theme_color": "#0b3b2b",
+  "categories": ["utilities", "finance", "education"],
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
